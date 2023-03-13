@@ -341,7 +341,7 @@ class Wrapper {
     }
     
     /**
-     * Function is help in tagging right reply to right comment by id
+     * Function is helping in tagging right reply to right comment by id
      *
      * @param String $commentID
      * @param Object $repliesDataset
@@ -354,6 +354,10 @@ class Wrapper {
         $index = 0;
         if(count($repliesDataset) > 0) {
             foreach($repliesDataset as $item) {
+                
+                if(empty($item->snippet->parentId) || (!empty($item->snippet->parentId) && $item->snippet->parentId != $commentID)) {
+                    continue;
+                }
                 
                 $finalData[$index]['id'] = $item->id;
                 $finalData[$index]['author'] = $item->snippet->authorDisplayName;
